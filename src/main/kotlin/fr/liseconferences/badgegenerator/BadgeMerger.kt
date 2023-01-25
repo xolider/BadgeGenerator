@@ -14,7 +14,7 @@ class BadgeMerger(private val columnCount: Int, private val rowCount: Int, priva
     private val width = BadgeGenerator.WIDTH * columnCount
     private val height = BadgeGenerator.HEIGHT * rowCount
 
-    private val margin = 70
+    private val margin = 200
 
     fun merge() {
         for(x in 0 until floor((badges.size / (columnCount*rowCount)).toFloat()).toInt()+1) {
@@ -29,8 +29,7 @@ class BadgeMerger(private val columnCount: Int, private val rowCount: Int, priva
                     val index = (i*columnCount + j)+(x*(columnCount*rowCount))
                     if(badges.size > index) {
                         val img = badges[index]
-                        val mrg = if(j == 0) margin else 0
-                        graphics.drawImage(img, mrg+j*BadgeGenerator.WIDTH, i*BadgeGenerator.HEIGHT, BadgeGenerator.WIDTH, BadgeGenerator.HEIGHT, null)
+                        graphics.drawImage(img, margin+j*BadgeGenerator.WIDTH, i*BadgeGenerator.HEIGHT, BadgeGenerator.WIDTH, BadgeGenerator.HEIGHT, null)
                     }
                 }
             }

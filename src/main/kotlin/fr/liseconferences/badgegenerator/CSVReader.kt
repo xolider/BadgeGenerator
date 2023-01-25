@@ -16,7 +16,7 @@ class CSVReader(path: String, val eat: Boolean) {
         }
         people.addAll(csvLines.map {
             val split = it.split(';')
-            Person(split[1], split[0], if(split.size == 3) split[2] else null, eat)
+            Person(split[1], split[0], if(split.size >= 3) split[2] else null, eat)
         })
     }
 
