@@ -75,7 +75,7 @@ class BadgeGenerator(private val person: Person) {
         var namesWidth = fontMetrics.stringWidth(names)
 
         if(namesWidth > WIDTH) {
-            names = "${person.lastName[0].uppercaseChar()} ${person.firstName.replaceFirstChar { if(it.isUpperCase()) it else it.uppercaseChar() }}"
+            names = "${person.lastName[0].uppercaseChar()}. ${person.firstName.replaceFirstChar { if(it.isUpperCase()) it else it.uppercaseChar() }}"
             namesWidth = fontMetrics.stringWidth(names)
         }
 
