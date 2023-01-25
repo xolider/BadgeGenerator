@@ -13,8 +13,8 @@ class BadgeGenerator(private val person: Person) {
 
     companion object {
         private val templateImage = ImageIO.read(Companion::class.java.classLoader.getResourceAsStream("lise_template.png"))
-        private const val WIDTH = 1385
-        private const val HEIGHT = 780
+        const val WIDTH = 1385
+        const val HEIGHT = 780
         private const val NAMES_SIZE = 120
         private const val COMPANY_SIZE = 75
 
@@ -71,8 +71,13 @@ class BadgeGenerator(private val person: Person) {
         graphics.color = Color.BLACK
         val fontMetrics = graphics.fontMetrics
 
-        val names = "${person.lastName.uppercase()} ${person.firstName.replaceFirstChar { if(it.isUpperCase()) it else it.uppercaseChar() }}"
-        val namesWidth = fontMetrics.stringWidth(names)
+        var names = "${person.lastName.uppercase()} ${person.firstName.replaceFirstChar { if(it.isUpperCase()) it else it.uppercaseChar() }}"
+        var namesWidth = fontMetrics.stringWidth(names)
+
+        if(namesWidth > WIDTH) {
+            names = "${person.lastName[0].uppercaseChar()} ${person.firstName.replaceFirstChar { if(it.isUpperCase()) it else it.uppercaseChar() }}"
+            namesWidth = fontMetrics.stringWidth(names)
+        }
 
         val nameX = (WIDTH/2)-(namesWidth/2)
         val nameY = (HEIGHT/2)-(NAMES_SIZE/2)
@@ -86,7 +91,7 @@ class BadgeGenerator(private val person: Person) {
         graphics.drawImage(logoImage, WIDTH-width-180, HEIGHT-height-50, width, height, null)
     }
 
-    fun save(path: String) {
+    fun save(path: String) : Image {
         graphics.dispose()
 
         val pathFile = File(path)
@@ -95,5 +100,6 @@ class BadgeGenerator(private val person: Person) {
         }
         val imagePath = File(pathFile, "${person.firstName} ${person.lastName}.png")
         ImageIO.write(image, "png", imagePath)
+        return image
     }
 }
